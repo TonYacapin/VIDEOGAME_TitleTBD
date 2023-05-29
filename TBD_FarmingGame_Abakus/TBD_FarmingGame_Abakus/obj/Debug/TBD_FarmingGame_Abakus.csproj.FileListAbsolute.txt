@@ -1,0 +1,11 @@
+C:\Users\Zen\source\repos\TBD_FarmingGame_Abakus\TBD_FarmingGame_Abakus\bin\Debug\TBD_FarmingGame_Abakus.exe.config
+C:\Users\Zen\source\repos\TBD_FarmingGame_Abakus\TBD_FarmingGame_Abakus\bin\Debug\TBD_FarmingGame_Abakus.exe
+C:\Users\Zen\source\repos\TBD_FarmingGame_Abakus\TBD_FarmingGame_Abakus\bin\Debug\TBD_FarmingGame_Abakus.pdb
+C:\Users\Zen\source\repos\TBD_FarmingGame_Abakus\TBD_FarmingGame_Abakus\obj\Debug\TBD_FarmingGame_Abakus.csproj.AssemblyReference.cache
+C:\Users\Zen\source\repos\TBD_FarmingGame_Abakus\TBD_FarmingGame_Abakus\obj\Debug\TBD_FarmingGame_Abakus.csproj.SuggestedBindingRedirects.cache
+C:\Users\Zen\source\repos\TBD_FarmingGame_Abakus\TBD_FarmingGame_Abakus\obj\Debug\TBD_FarmingGame_Abakus.Form1.resources
+C:\Users\Zen\source\repos\TBD_FarmingGame_Abakus\TBD_FarmingGame_Abakus\obj\Debug\TBD_FarmingGame_Abakus.Properties.Resources.resources
+C:\Users\Zen\source\repos\TBD_FarmingGame_Abakus\TBD_FarmingGame_Abakus\obj\Debug\TBD_FarmingGame_Abakus.csproj.GenerateResource.cache
+C:\Users\Zen\source\repos\TBD_FarmingGame_Abakus\TBD_FarmingGame_Abakus\obj\Debug\TBD_FarmingGame_Abakus.csproj.CoreCompileInputs.cache
+C:\Users\Zen\source\repos\TBD_FarmingGame_Abakus\TBD_FarmingGame_Abakus\obj\Debug\TBD_FarmingGame_Abakus.exe
+C:\Users\Zen\source\repos\TBD_FarmingGame_Abakus\TBD_FarmingGame_Abakus\obj\Debug\TBD_FarmingGame_Abakus.pdb
