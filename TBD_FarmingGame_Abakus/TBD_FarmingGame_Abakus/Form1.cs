@@ -21,8 +21,12 @@ namespace TBD_FarmingGame_Abakus
         //1=till, 2=water, 3=plant, 4=harvest
         private string selectedaction = "Till";
 
+        private Point characterPosition;
 
-      
+
+
+
+
         Tile tile1 = new Tile();
         Tile tile2 = new Tile();
         Tile tile3 = new Tile();
@@ -30,13 +34,68 @@ namespace TBD_FarmingGame_Abakus
         public Form1()
         {
             InitializeComponent();
+            characterPosition = new Point(400,270);
+            this.KeyDown += MainForm_KeyDown;
+            this.KeyUp += MainForm_KeyUp;
+        }
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Handle key presses for character movement
+            switch (e.KeyCode)
+            {
+                case Keys.W:
+                    MoveCharacter(0, -10);  // Move character up
+                    break;
+                case Keys.A:
+                    MoveCharacter(-10, 0);  // Move character left
+                    break;
+                case Keys.S:
+                    MoveCharacter(0, 10);  // Move character down
+                    break;
+                case Keys.D:
+                    MoveCharacter(10, 0);  // Move character right
+                    break;
+           
+            }
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
+        private void MainForm_KeyUp(object sender, KeyEventArgs e)
         {
-            // Initialize the game state
-            UpdateGameState();
+            // Handle key releases for character movement
+            switch (e.KeyCode)
+            {
+                case Keys.W:
+                case Keys.A:
+                case Keys.S:
+                case Keys.D:
+                    StopCharacter();  // Stop character movement
+                    break;
+            }
         }
+
+        private void StopCharacter()
+        {
+            // Perform any necessary actions when character movement stops
+            // For example, stop animation, play sound, etc.
+        }
+
+        private void MoveCharacter(int deltaX, int deltaY)
+        {
+            // Update character position based on movement
+            characterPosition.X += deltaX;
+            characterPosition.Y += deltaY;
+
+            // Update character's visual representation
+            characterPictureBox.Location = characterPosition;
+
+            // Perform additional actions or checks based on the new position
+            // For example, interact with crops, objects, or other game elements
+        }
+
+
+
+
+
 
         private void UpdateGameState()
         {
@@ -53,15 +112,7 @@ namespace TBD_FarmingGame_Abakus
             UpdateGameState();
         }
 
-        private void btnPlantCrops_Click_1(object sender, EventArgs e)
-        {
-            if (coins > 0)
-            {
-                coins--;
-                btnPlantCrop_Tile1.Enabled = false;
-                PlantCrop_Timer.Start();
-            } 
-        }
+       
       
 
         private void btnHarvestCrops_Click_1(object sender, EventArgs e)
@@ -75,23 +126,7 @@ namespace TBD_FarmingGame_Abakus
 
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-
-
-            progressBar1.Value += 20;
-
-            if (progressBar1.Value == 100)
-            {
-                PlantCrop_Timer.Enabled = false;
-     
-                btnPlantCrop_Tile1.Enabled = true;
-                progressBar1.Value = 0;
-                cropsplanted++;
-            }
-            UpdateGameState();
-
-        }
+       
 
         private void btnSellCrops_Click(object sender, EventArgs e)
         {
@@ -123,41 +158,46 @@ namespace TBD_FarmingGame_Abakus
 
         private void Btn_Tile1_Click(object sender, EventArgs e)
         {
+           
+
 
             switch (selectedaction)
             {
+
                 // till the tile
                 case "Till":
-                   if(tile1.IsNormal)
+                    if (tile1.IsNormal)
                     {
-                            
+                        timer_Action.Start();
+                        DisableAction(true);
                         tile1.IsTilled = true;
-      
+
                         tile1.IsNormal = false;
 
                         Btn_Tile1.ImageIndex = 1;
 
-
-                        MessageBox.Show("Tilling");
                     }
 
                     break;
 
                 case "Water":
-                    if (tile1.IsTilled &&  !tile1.IsWatered  )
+                    if (tile1.IsTilled && !tile1.IsWatered)
                     {
+
+                        timer_Action.Start();
+                        DisableAction(true);
                         tile1.IsWatered = true;
-               
-                        MessageBox.Show("Watering");
 
                         Btn_Tile1.ImageIndex = 2;
+
                     }
 
                     if (tile1.IsSeeded && !tile1.IsCropReady)
                     {
-                        progressbar_tile1.Show();
-
+                        timer_Action.Start();
+                        DisableAction(true);
                         Tile1_Timer.Start();
+                      
 
                         Btn_Tile1.ImageIndex = 3;
 
@@ -167,17 +207,18 @@ namespace TBD_FarmingGame_Abakus
                 case "Plant":
                     if (tile1.IsTilled && !tile1.IsSeeded && !tile1.IsWatered)
                     {
+
+                        timer_Action.Start();
+                        DisableAction(true);
                         tile1.IsSeeded = true;
                         Btn_Tile1.ImageIndex = 4;
 
-                        MessageBox.Show("Planting");
                     }
-
 
                     if (tile1.IsWatered && !tile1.IsCropReady)
                     {
-
-                    
+                        timer_Action.Start();
+                        DisableAction(true);
                         Btn_Tile1.ImageIndex = 3;
                         progressbar_tile1.Show();
 
@@ -188,6 +229,8 @@ namespace TBD_FarmingGame_Abakus
                 case "Harvest":
                     if (tile1.IsCropReady)
                     {
+                        timer_Action.Start();
+                        DisableAction(true);
                         tile1.IsNormal = true;
                         tile1.IsTilled = false;
                         tile1.IsWatered = false;
@@ -195,32 +238,71 @@ namespace TBD_FarmingGame_Abakus
                         tile1.IsHarvested = false;
                         tile1.IsCropReady = false;
                         Btn_Tile1.ImageIndex = 0;
-                        MessageBox.Show("Harvesting");
-
+                      
                         cropstosell += 1;
                         UpdateGameState();
                     }
                     break;
                 default:
-                
+                  
                     break;
             }
+
+          
         }
 
         private void Tile1_Timer_Tick(object sender, EventArgs e)
         {
-            progressbar_tile1.Value += 1;
+            progressbar_tile1.Value += 25;
 
             if (progressbar_tile1.Value == 100)
             {
                Tile1_Timer.Stop();
 
-                tile1.IsCropReady = true;
 
+                Btn_Tile1.ImageIndex = 5;
+                tile1.IsCropReady = true;
+                progressbar_tile1.Hide();
                 progressbar_tile1.Value = 0;
              
             }
             UpdateGameState();
+
+        }
+
+        private void timer_Action_Tick(object sender, EventArgs e)
+        {
+        
+            progressBar_Action.Value += 25;
+
+            if (progressBar_Action.Value == 100)
+            {
+              
+                timer_Action.Stop();
+
+                DisableAction(false);
+                progressBar_Action.Value = 0;
+            }
+
+       
+        }
+
+        private void DisableAction(Boolean boolean) {
+
+            if (boolean == false)
+            {
+                Btn_Till.Enabled = true;
+                btn_harvest.Enabled = true;
+                btn_plant.Enabled = true;
+                btn_water.Enabled = true;
+            }
+            else
+            {
+                Btn_Till.Enabled = false;
+                btn_harvest.Enabled = false;
+                btn_plant.Enabled = false;
+                btn_water.Enabled = false;
+            }
 
         }
     }
